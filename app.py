@@ -153,7 +153,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown('<p class="main-heading">Data Vidwan Independence Day Portrait</p>', unsafe_allow_html=True)
-st.markdown('<p class="sub-heading">Upload your photo below, and our advanced AI engine will do the magic to generate your customized portrait.</p>', unsafe_allow_html=True)
+st.markdown('<p class="sub-heading">Upload your photo below, and our advanced AI engine will do the magic to generate your portrait.</p>', unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader("Upload your photo", type=["png", "jpg", "jpeg"])
 
