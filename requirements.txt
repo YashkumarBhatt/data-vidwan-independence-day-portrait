@@ -1,0 +1,7 @@
+streamlit
+rembg
+onnxruntime
+pillow
+opencv-python-headless
+requests
+numpy==2.0.2
