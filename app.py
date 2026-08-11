@@ -152,7 +152,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<p class="main-heading"><img src="https://i.ibb.co/FbLdv4bt/Data-Vidwan-Logo.jpg" style="height: 2em; vertical-align: middle; margin-right: 10px; margin-bottom: 5px;"> Independence Day Portrait</p>', unsafe_allow_html=True)
+st.markdown('<p class="main-heading"><img src="https://i.ibb.co/FbLdv4bt/Data-Vidwan-Logo.jpg" style="height: 2em; vertical-align: middle; margin-right: 5px; margin-bottom: 5px;"> Independence Day Portrait</p>', unsafe_allow_html=True)
 st.markdown('<p class="sub-heading">Upload your photo below, and our advanced AI engine will do the magic to generate your portrait.</p>', unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader("Upload your photo", type=["png", "jpg", "jpeg"])
