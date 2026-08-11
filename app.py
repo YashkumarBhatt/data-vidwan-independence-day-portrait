@@ -122,7 +122,7 @@ def process_independence_day_avatar_v2(user_img):
     return final_canvas.convert("RGB")
 
 st.title("🇮🇳 Data Vidwan Independence Day Portrait")
-st.markdown("UPLOAD your photo. Hit the red 'Generate Portrait' button and let our AI-assisted script perform a magic to make a beautuful customuised portrait of yours!")
+st.markdown("UPLOAD your photo. Hit the red 'Generate Portrait' button after uploading your image and let our AI-assisted script perform a magic to make a beautiful customised portrait of yours!")
 
 uploaded_file = st.file_uploader("Upload Profile Photo", type=["png", "jpg", "jpeg"])
 
