@@ -122,26 +122,24 @@ def process_independence_day_avatar_v2(user_img):
     return final_canvas.convert("RGB")
 
 st.title("🇮🇳 Data Vidwan Independence Day Portrait")
-st.markdown("UPLOAD your photo. This updated app applies advanced framing, depth of field blur, and typography inspired by modern composite artwork.")
+st.markdown("UPLOAD your photo and our AI-assisted script will do a magic to make a customuised portrait of yours!")
 
 uploaded_file = st.file_uploader("Upload Profile Photo", type=["png", "jpg", "jpeg"])
 
 if uploaded_file is not None:
-    # Convert the file to an opencv image/numpy array like gradio provides
-    file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
-    user_img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-    # OpenCV loads as BGR, convert to RGB since the processing logic uses RGB
-    user_img = cv2.cvtColor(user_img, cv2.COLOR_BGR2RGB)
+    # Convert uploaded file using PIL for maximum compatibility
+    user_pil = Image.open(uploaded_file).convert("RGB")
+    user_img = np.array(user_pil)
     
     # Display the uploaded image
-    st.image(user_img, caption="Uploaded Image", use_column_width=True)
+    st.image(user_img, caption="Uploaded Image", use_container_width=True)
     
     if st.button("Generate Portrait", type="primary"):
         with st.spinner("Generating your portrait... This might take a few seconds."):
             result_img = process_independence_day_avatar_v2(user_img)
             
             if result_img:
-                st.image(result_img, caption="Your Advanced Independence Day Portrait", use_column_width=True)
+                st.image(result_img, caption="Your Advanced Independence Day Portrait", use_container_width=True)
                 
                 # Allow user to download
                 buf = BytesIO()
