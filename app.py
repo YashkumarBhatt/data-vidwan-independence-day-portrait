@@ -7,7 +7,7 @@ import requests
 from io import BytesIO
 import os
 
-st.set_page_config(page_title="Data Vidwan Independence Day", page_icon="🇮🇳")
+st.set_page_config(page_title="Data Vidwan Independence Day Portrait")
 
 MAIN_BG_URL = "https://i.pinimg.com/originals/7d/a7/1c/7da71cec97c84a82d01280fbbb66c145.jpg"
 
@@ -121,10 +121,41 @@ def process_independence_day_avatar_v2(user_img):
 
     return final_canvas.convert("RGB")
 
-st.title("🇮🇳 Data Vidwan Independence Day Portrait")
-st.markdown("UPLOAD your photo. Hit the red 'Generate Portrait' button after uploading your image and let our AI-assisted script perform a magic to make a beautiful customised portrait of yours!")
+# Custom CSS for styling
+st.markdown("""
+<style>
+    .main-heading {
+        color: #1E3A8A; /* Dark Blue */
+        font-size: 2.1rem !important;
+        font-weight: 800;
+        margin-bottom: 0rem;
+    }
+    .sub-heading {
+        color: #3B82F6; /* Lighter Blue */
+        font-size: 1.05rem;
+        margin-top: 0.5rem;
+        margin-bottom: 2rem;
+    }
+    /* Style both buttons identically */
+    div.stButton > button, div.stDownloadButton > button {
+        background-color: #1E3A8A !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 6px !important;
+        font-weight: 600 !important;
+        padding: 0.5rem 1rem !important;
+    }
+    div.stButton > button:hover, div.stDownloadButton > button:hover {
+        background-color: #2563EB !important;
+        color: white !important;
+    }
+</style>
+""", unsafe_allow_html=True)
 
-uploaded_file = st.file_uploader("Upload Profile Photo", type=["png", "jpg", "jpeg"])
+st.markdown('<p class="main-heading">Data Vidwan Independence Day Portrait</p>', unsafe_allow_html=True)
+st.markdown('<p class="sub-heading">Upload your photo below, and our advanced AI engine will automatically isolate the subject and apply professional compositing to generate your customized portrait.</p>', unsafe_allow_html=True)
+
+uploaded_file = st.file_uploader("Upload your photo", type=["png", "jpg", "jpeg"])
 
 if uploaded_file is not None:
     # Convert uploaded file using PIL for maximum compatibility
@@ -134,7 +165,7 @@ if uploaded_file is not None:
     # Display the uploaded image
     st.image(user_img, caption="Uploaded Image", use_container_width=True)
     
-    if st.button("Generate Portrait", type="primary"):
+    if st.button("Generate Portrait"):
         with st.spinner("Generating your portrait... This might take a few seconds."):
             result_img = process_independence_day_avatar_v2(user_img)
             
