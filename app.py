@@ -225,9 +225,11 @@ st.markdown('''
 </div>
 ''', unsafe_allow_html=True)
 
-uploaded_file = st.file_uploader("", type=["png", "jpg", "jpeg"])
+# Use accept_multiple_files=True to force the large drag-and-drop cloud UI
+uploaded_files = st.file_uploader("Upload your photo", type=["png", "jpg", "jpeg"], accept_multiple_files=True, label_visibility="hidden")
 
-if uploaded_file is not None:
+if uploaded_files:
+    uploaded_file = uploaded_files[0]
     # Convert uploaded file using PIL for maximum compatibility
     user_pil = Image.open(uploaded_file).convert("RGB")
     user_img = np.array(user_pil)
