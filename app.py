@@ -94,7 +94,7 @@ def process_independence_day_avatar_v2(user_img):
 
     cutout_scaled = cutout.resize((target_w, target_h), Image.Resampling.LANCZOS)
 
-      glow_size = 12
+    glow_size = 12
     glow_alpha = Image.new("L", (target_w + glow_size * 2, target_h + glow_size * 2), 0)
     glow_mask = cutout_scaled.split()[3].filter(ImageFilter.GaussianBlur(radius=2))
     glow_alpha.paste(glow_mask, (glow_size, glow_size))
