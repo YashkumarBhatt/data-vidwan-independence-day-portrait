@@ -18,6 +18,7 @@ def get_base64_image(image_path):
         return base64.b64encode(f.read()).decode()
 
 bg_image = get_base64_image("assets/independence_bg.png")
+logo_base64 = get_base64_image("assets/logo.png")
 
 @st.cache_resource(show_spinner="Downloading/verifying background-removal model...")
 def load_rembg_session():
@@ -301,9 +302,9 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('''
+st.markdown(f'''
 <div class="title-container">
-    <img src="https://i.ibb.co/FbLdv4bt/Data-Vidwan-Logo.jpg" class="logo-img">
+    <img src="data:image/png;base64,{logo_base64}" class="logo-img">
     <div class="main-heading">
         <span class="saffron">Freedom in </span> <span class="green">Every Frame</span>
     </div>
