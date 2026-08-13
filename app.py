@@ -225,7 +225,7 @@ st.markdown(f"""
 
     /* Inject the custom text "Drag & drop your photo here" */
     [data-testid="stFileUploader"]::after {{
-        content: "Drag & drop your photo here \000A \000A or \000A \000A Browse Files \000A \000A PNG, JPG up to 20MB";
+        content: "Drag & drop your photo here \A \A or \A \A Browse Files \A \A PNG, JPG up to 20MB";
         white-space: pre-wrap;
         text-align: center;
         font-size: 1.1rem;
