@@ -162,7 +162,7 @@ st.markdown(f"""
     }}
     
     .logo-img {{
-        height: 60px;
+        height: 100px;
         margin-bottom: 10px;
     }}
 
