@@ -183,35 +183,97 @@ st.markdown(f"""
         font-weight: 500;
     }}
 
-    /* Style the file uploader */
-    [data-testid="stFileUploadDropzone"] {{
-        background-color: white !important;
-        border-radius: 15px !important;
-        padding: 2rem !important;
-        border: 2px dashed #E0E0E0 !important;
-    }}
-    
-    [data-testid="stFileUploadDropzone"] button {{
-        background-color: #138808 !important; /* Green */
-        color: white !important;
-        border-radius: 20px !important;
-        font-weight: bold !important;
-        padding: 0.5rem 1.5rem !important;
-    }}
+    /* Hide the default Streamlit label for the file uploader to keep it clean */
+    [data-testid="stWidgetLabel"] {
+        display: none;
+    }
 
-    /* Style both buttons identically */
-    div.stButton > button, div.stDownloadButton > button {{
+    /* Style the main dropzone container to match the Idea 2 mockup */
+    [data-testid="stFileUploadDropzone"] {
+        background-color: white !important;
+        border-radius: 20px !important;
+        padding: 3rem 2rem !important;
+        border: 2px solid #E5E7EB !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+        max-width: 500px !important;
+        margin: 0 auto !important; /* Center it */
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Make the inner container take up full width for centering */
+    [data-testid="stFileUploadDropzone"] > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    /* Target the SVG icon inside the dropzone and replace it with a cloud */
+    [data-testid="stFileUploadDropzone"] svg {
+        width: 60px !important;
+        height: 60px !important;
+        margin-bottom: 15px !important;
+        color: #6B7280 !important; /* Gray color for the cloud */
+    }
+
+    /* Style the text "Drag and drop files here" */
+    [data-testid="stFileUploadDropzone"] span {
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        color: #374151 !important;
+        margin-bottom: 10px !important;
+    }
+
+    /* Add the "or" text with lines using a pseudo-element on the button's wrapper */
+    [data-testid="stFileUploadDropzone"] button {
+        background-color: #138808 !important; /* Indian Green */
+        color: white !important;
+        border-radius: 25px !important;
+        font-weight: 600 !important;
+        padding: 0.6rem 2rem !important;
+        font-size: 1rem !important;
+        border: none !important;
+        margin-top: 15px !important;
+        box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3) !important;
+    }
+    
+    [data-testid="stFileUploadDropzone"] button:hover {
+        background-color: #0F6B06 !important;
+    }
+
+    /* Style the small text at the bottom "Limit 200MB..." */
+    [data-testid="stFileUploadDropzone"] small {
+        font-size: 0.8rem !important;
+        color: #9CA3AF !important;
+        margin-top: 15px !important;
+    }
+
+    /* Center the uploader horizontally in the main container */
+    [data-testid="stVerticalBlock"] > div:has([data-testid="stFileUploadDropzone"]) {
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Style the Generate/Download buttons identically to the browse button */
+    div.stButton > button, div.stDownloadButton > button {
         background-color: #138808 !important;
         color: white !important;
         border: none !important;
-        border-radius: 20px !important;
+        border-radius: 25px !important;
         font-weight: 600 !important;
-        padding: 0.5rem 1.5rem !important;
-    }}
-    div.stButton > button:hover, div.stDownloadButton > button:hover {{
+        padding: 0.6rem 2rem !important;
+        font-size: 1rem !important;
+        box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3) !important;
+        display: block;
+        margin: 0 auto; /* Center buttons */
+    }
+    div.stButton > button:hover, div.stDownloadButton > button:hover {
         background-color: #0F6B06 !important;
         color: white !important;
-    }}
+    }
 </style>
 """, unsafe_allow_html=True)
 
