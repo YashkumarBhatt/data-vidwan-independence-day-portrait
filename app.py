@@ -252,14 +252,14 @@ st.markdown(f"""
 
     /* Fake Button */
     .upload-btn-fake {{
-        background-color: #138808;
+        background-color: #FF9933;
         color: white;
         font-weight: 600;
         padding: 12px 36px;
         border-radius: 30px;
         font-size: 1.05rem;
         margin-bottom: 20px;
-        box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3);
+        box-shadow: 0 4px 6px -1px rgba(255, 153, 51, 0.3);
     }}
 
     /* Sub Text */
@@ -282,22 +282,15 @@ st.markdown(f"""
         cursor: pointer !important;
     }}
 
-    /* Center the Generate/Download buttons */
+    /* Center the Generate/Download buttons (Colors applied dynamically) */
     div.stButton > button, div.stDownloadButton > button {{
-        background-color: #138808 !important;
-        color: white !important;
-        border: none !important;
         border-radius: 25px !important;
         font-weight: 600 !important;
         padding: 0.6rem 2rem !important;
         font-size: 1rem !important;
-        box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3) !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
         display: block;
         margin: 0 auto;
-    }}
-    div.stButton > button:hover, div.stDownloadButton > button:hover {{
-        background-color: #0F6B06 !important;
-        color: white !important;
     }}
 </style>
 """, unsafe_allow_html=True)
@@ -335,24 +328,34 @@ if uploaded_files:
     user_pil = Image.open(uploaded_file).convert("RGB")
     user_img = np.array(user_pil)
     
-    # Display the uploaded image
-    st.image(user_img, caption="Uploaded Image", use_container_width=True)
+    # Hide the uploader UI now that a file is uploaded
+    st.markdown('<style>[data-testid="stFileUploader"], .custom-upload-container { display: none !important; }</style>', unsafe_allow_html=True)
+    
+    # Style the generate button to be white with saffron border
+    st.markdown('<style>div.stButton > button { background-color: white !important; color: #FF9933 !important; border: 2px solid #FF9933 !important; } div.stButton > button:hover { background-color: #FFF3E0 !important; }</style>', unsafe_allow_html=True)
     
     if st.button("Generate Portrait"):
+        # Style the spinner temporarily if needed, but it's fine.
         with st.spinner("Generating your portrait... This might take a few seconds."):
             result_img = process_independence_day_avatar_v2(user_img)
             
             if result_img:
                 st.image(result_img, caption="Your Advanced Independence Day Portrait", use_container_width=True)
                 
-                # Allow user to download
+                # Hide the Generate Button since we're done
+                st.markdown('<style>div.stButton { display: none !important; }</style>', unsafe_allow_html=True)
+                
+                # Style the download button to be green
+                st.markdown('<style>div.stDownloadButton > button { background-color: #138808 !important; color: white !important; border: none !important; box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3) !important; } div.stDownloadButton > button:hover { background-color: #0F6B06 !important; }</style>', unsafe_allow_html=True)
+                
+                # Allow user to download as JPG
                 buf = BytesIO()
-                result_img.save(buf, format="PNG")
+                result_img.save(buf, format="JPEG", quality=95)
                 byte_im = buf.getvalue()
                 
                 st.download_button(
                     label="Download Portrait",
                     data=byte_im,
-                    file_name="independence_day_portrait.png",
-                    mime="image/png"
+                    file_name="independence_day_portrait.jpg",
+                    mime="image/jpeg"
                 )
