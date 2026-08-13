@@ -10,7 +10,7 @@ import base64
 
 st.set_page_config(page_title="Data Vidwan Independence Day Portrait")
 
-MAIN_BG_URL = "https://i.pinimg.com/originals/7d/a7/1c/7da71cec97c84a82d01280fbbb66c145.jpg"
+MAIN_BG_URL = "https://i.ibb.co/wrgwQByv/Whats-App-Image-2026-08-13-at-4-22-52-PM.jpg"
 
 # --- Background Image Setup ---
 def get_base64_image(image_path):
