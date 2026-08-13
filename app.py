@@ -346,7 +346,7 @@ else:
         # STATE 2: GENERATE
         st.markdown('''
         <div class="custom-upload-container" style="pointer-events: none;">
-            <div class="custom-upload-inner" style="padding-bottom: 70px;">
+            <div class="custom-upload-inner" style="padding-bottom: 20px;">
                 <svg class="cloud-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1E3A8A">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -357,7 +357,7 @@ else:
         ''', unsafe_allow_html=True)
         
         # Pull the button up into the box
-        st.markdown('<style>div.stButton { margin-top: -85px; position: relative; z-index: 99999; } div.stButton > button { background-color: white !important; color: #FF9933 !important; border: 2px solid #FF9933 !important; } div.stButton > button:hover { background-color: #FFF3E0 !important; }</style>', unsafe_allow_html=True)
+        st.markdown('<style>div.stButton { margin-top: 10px; } div.stButton > button { background-color: white !important; color: #FF9933 !important; border: 2px solid #FF9933 !important; } div.stButton > button:hover { background-color: #FFF3E0 !important; }</style>', unsafe_allow_html=True)
         
         if st.button("Generate Portrait"):
             with st.spinner("Generating your portrait... This might take a few seconds."):
@@ -370,7 +370,7 @@ else:
         # STATE 3: DOWNLOAD
         st.markdown('''
         <div class="custom-upload-container" style="pointer-events: none;">
-            <div class="custom-upload-inner" style="padding-bottom: 70px;">
+            <div class="custom-upload-inner" style="padding-bottom: 20px;">
                 <svg class="cloud-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#138808">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
@@ -381,7 +381,7 @@ else:
         ''', unsafe_allow_html=True)
         
         # Pull the download button up into the box
-        st.markdown('<style>div.stDownloadButton { margin-top: -85px; position: relative; z-index: 99999; margin-bottom: 40px; } div.stDownloadButton > button { background-color: #138808 !important; color: white !important; border: none !important; box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3) !important; } div.stDownloadButton > button:hover { background-color: #0F6B06 !important; }</style>', unsafe_allow_html=True)
+        st.markdown('<style>div.stDownloadButton { margin-top: 10px; margin-bottom: 40px; } div.stDownloadButton > button { background-color: #138808 !important; color: white !important; border: none !important; box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3) !important; } div.stDownloadButton > button:hover { background-color: #0F6B06 !important; }</style>', unsafe_allow_html=True)
         
         buf = BytesIO()
         st.session_state.result_img.save(buf, format="JPEG", quality=95)
