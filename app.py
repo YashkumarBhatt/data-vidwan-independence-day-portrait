@@ -6,10 +6,18 @@ from rembg import remove, new_session
 import requests
 from io import BytesIO
 import os
+import base64
 
 st.set_page_config(page_title="Data Vidwan Independence Day Portrait")
 
 MAIN_BG_URL = "https://i.pinimg.com/originals/7d/a7/1c/7da71cec97c84a82d01280fbbb66c145.jpg"
+
+# --- Background Image Setup ---
+def get_base64_image(image_path):
+    with open(image_path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+bg_image = get_base64_image("assets/independence_bg.png")
 
 @st.cache_resource(show_spinner="Downloading/verifying background-removal model...")
 def load_rembg_session():
@@ -121,34 +129,54 @@ def process_independence_day_avatar_v2(user_img):
 
     return final_canvas.convert("RGB")
 
-# Custom CSS for styling
-st.markdown("""
+# Custom CSS for styling + Independence Day background
+st.markdown(f"""
 <style>
-    .main-heading {
+    /* Independence Day Background */
+    .stApp {{
+        background-image: url("data:image/png;base64,{bg_image}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+
+    /* Make Streamlit containers transparent */
+    [data-testid="stAppViewContainer"] {{
+        background: transparent;
+    }}
+    [data-testid="stHeader"] {{
+        background: transparent;
+    }}
+    [data-testid="stMain"] {{
+        background: transparent;
+    }}
+
+    .main-heading {{
         color: #1E3A8A; /* Dark Blue */
         font-size: 2.1rem !important;
         font-weight: 800;
         margin-bottom: 0rem;
-    }
-    .sub-heading {
+    }}
+    .sub-heading {{
         color: #3B82F6; /* Lighter Blue */
         font-size: 1.05rem;
         margin-top: 0.5rem;
         margin-bottom: 2rem;
-    }
+    }}
     /* Style both buttons identically */
-    div.stButton > button, div.stDownloadButton > button {
+    div.stButton > button, div.stDownloadButton > button {{
         background-color: #1E3A8A !important;
         color: white !important;
         border: none !important;
         border-radius: 6px !important;
         font-weight: 600 !important;
         padding: 0.5rem 1rem !important;
-    }
-    div.stButton > button:hover, div.stDownloadButton > button:hover {
+    }}
+    div.stButton > button:hover, div.stDownloadButton > button:hover {{
         background-color: #2563EB !important;
         color: white !important;
-    }
+    }}
 </style>
 """, unsafe_allow_html=True)
 
