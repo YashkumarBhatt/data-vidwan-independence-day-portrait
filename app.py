@@ -183,81 +183,72 @@ st.markdown(f"""
         font-weight: 500;
     }}
 
-    /* Hide the default Streamlit label for the file uploader to keep it clean */
+    /* =========================================
+       EXTREME FILE UPLOADER CSS HACKING 
+       ========================================= */
+
+    /* Hide the label completely */
     [data-testid="stWidgetLabel"] {{
-        display: none;
+        display: none !important;
     }}
 
-    /* Style the main dropzone container to match the Idea 2 mockup */
-    [data-testid="stFileUploadDropzone"] {{
+    /* Make the entire file uploader area a giant invisible button overlaying our custom UI */
+    [data-testid="stFileUploader"] {{
+        position: relative;
         background-color: white !important;
         border-radius: 20px !important;
-        padding: 3rem 2rem !important;
+        padding: 40px !important;
         border: 2px solid #E5E7EB !important;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
         max-width: 500px !important;
-        margin: 0 auto !important; /* Center it */
+        margin: 0 auto !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
-        justify-content: center !important;
-    }}
-    
-    /* Make the inner container take up full width for centering */
-    [data-testid="stFileUploadDropzone"] > div {{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
+        text-align: center !important;
+        overflow: hidden;
     }}
 
-    /* Target the SVG icon inside the dropzone and replace it with a cloud */
-    [data-testid="stFileUploadDropzone"] svg {{
-        width: 60px !important;
-        height: 60px !important;
-        margin-bottom: 15px !important;
-        color: #6B7280 !important; /* Gray color for the cloud */
+    /* Inject the cloud icon using ::before on the uploader */
+    [data-testid="stFileUploader"]::before {{
+        content: "";
+        display: block;
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 20px auto;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12'/%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        pointer-events: none;
     }}
 
-    /* Style the text "Drag and drop files here" */
-    [data-testid="stFileUploadDropzone"] span {{
-        font-size: 1.1rem !important;
-        font-weight: 600 !important;
-        color: #374151 !important;
-        margin-bottom: 10px !important;
+    /* Inject the custom text "Drag & drop your photo here" */
+    [data-testid="stFileUploader"]::after {{
+        content: "Drag & drop your photo here \000A \000A or \000A \000A Browse Files \000A \000A PNG, JPG up to 20MB";
+        white-space: pre-wrap;
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #374151;
+        line-height: 1.5;
+        position: relative;
+        z-index: 1;
+        pointer-events: none;
     }}
 
-    /* Add the "or" text with lines using a pseudo-element on the button's wrapper */
-    [data-testid="stFileUploadDropzone"] button {{
-        background-color: #138808 !important; /* Indian Green */
-        color: white !important;
-        border-radius: 25px !important;
-        font-weight: 600 !important;
-        padding: 0.6rem 2rem !important;
-        font-size: 1rem !important;
-        border: none !important;
-        margin-top: 15px !important;
-        box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3) !important;
-    }}
-    
-    [data-testid="stFileUploadDropzone"] button:hover {{
-        background-color: #0F6B06 !important;
+    /* Hide the default Streamlit uploader visually but keep it clickable over our custom UI */
+    [data-testid="stFileUploader"] > section {{
+        position: absolute !important;
+        top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+        opacity: 0 !important;
+        z-index: 10 !important;
+        width: 100% !important;
+        height: 100% !important;
+        cursor: pointer !important;
     }}
 
-    /* Style the small text at the bottom "Limit 200MB..." */
-    [data-testid="stFileUploadDropzone"] small {{
-        font-size: 0.8rem !important;
-        color: #9CA3AF !important;
-        margin-top: 15px !important;
-    }}
-
-    /* Center the uploader horizontally in the main container */
-    [data-testid="stVerticalBlock"] > div:has([data-testid="stFileUploadDropzone"]) {{
-        display: flex;
-        justify-content: center;
-    }}
-
-    /* Style the Generate/Download buttons identically to the browse button */
+    /* Center the Generate/Download buttons */
     div.stButton > button, div.stDownloadButton > button {{
         background-color: #138808 !important;
         color: white !important;
@@ -268,7 +259,7 @@ st.markdown(f"""
         font-size: 1rem !important;
         box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3) !important;
         display: block;
-        margin: 0 auto; /* Center buttons */
+        margin: 0 auto;
     }}
     div.stButton > button:hover, div.stDownloadButton > button:hover {{
         background-color: #0F6B06 !important;
