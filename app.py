@@ -305,7 +305,7 @@ st.markdown('''
 <div class="title-container">
     <img src="https://i.ibb.co/FbLdv4bt/Data-Vidwan-Logo.jpg" class="logo-img">
     <div class="main-heading">
-        <span class="saffron">Celebrate</span> <span class="green">Freedom</span>
+        <span class="saffron">Freedom in </span> <span class="green">Every Frame</span>
     </div>
     <p class="sub-heading">Upload your photo and let AI create your <b style="color: #FF9933;">Independence</b> <b style="color: #138808;">Day</b> portrait.</p>
 </div>
