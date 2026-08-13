@@ -305,57 +305,93 @@ st.markdown(f'''
 </div>
 ''', unsafe_allow_html=True)
 
-st.markdown('''
-<div class="custom-upload-container">
-    <div class="custom-upload-inner">
-        <svg class="cloud-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#6B7280">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-        </svg>
-        <div class="upload-text-main">Drag & drop your photo here</div>
-        <div class="upload-divider"><span>or</span></div>
-        <div class="upload-btn-fake">Browse Files</div>
-        <div class="upload-text-sub">PNG, JPG up to 20MB</div>
-    </div>
-</div>
-''', unsafe_allow_html=True)
 
-# Use accept_multiple_files=True to force the large drag-and-drop cloud UI
+# Handle state
+if "result_img" not in st.session_state:
+    st.session_state.result_img = None
+if "portrait_generated" not in st.session_state:
+    st.session_state.portrait_generated = False
+
+# The invisible file uploader is always rendered to keep the file in memory, 
+# but we will conditionally hide it if a file is already uploaded.
 uploaded_files = st.file_uploader("Upload your photo", type=["png", "jpg", "jpeg"], accept_multiple_files=True, label_visibility="hidden")
 
-if uploaded_files:
+if not uploaded_files:
+    # STATE 1: UPLOAD
+    st.session_state.result_img = None
+    st.session_state.portrait_generated = False
+    
+    st.markdown('''
+    <div class="custom-upload-container">
+        <div class="custom-upload-inner">
+            <svg class="cloud-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#6B7280">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            <div class="upload-text-main">Drag & drop your photo here</div>
+            <div class="upload-divider"><span>or</span></div>
+            <div class="upload-btn-fake">Browse Files</div>
+            <div class="upload-text-sub">PNG, JPG up to 20MB</div>
+        </div>
+    </div>
+    ''', unsafe_allow_html=True)
+else:
+    # A file is uploaded. Hide the invisible uploader so it doesn't block clicks.
+    st.markdown('<style>[data-testid="stFileUploader"] { display: none !important; }</style>', unsafe_allow_html=True)
+    
     uploaded_file = uploaded_files[0]
-    # Convert uploaded file using PIL for maximum compatibility
     user_pil = Image.open(uploaded_file).convert("RGB")
     user_img = np.array(user_pil)
     
-    # Hide the uploader UI now that a file is uploaded
-    st.markdown('<style>[data-testid="stFileUploader"], .custom-upload-container { display: none !important; }</style>', unsafe_allow_html=True)
-    
-    # Style the generate button to be white with saffron border
-    st.markdown('<style>div.stButton > button { background-color: white !important; color: #FF9933 !important; border: 2px solid #FF9933 !important; } div.stButton > button:hover { background-color: #FFF3E0 !important; }</style>', unsafe_allow_html=True)
-    
-    if st.button("Generate Portrait"):
-        # Style the spinner temporarily if needed, but it's fine.
-        with st.spinner("Generating your portrait... This might take a few seconds."):
-            result_img = process_independence_day_avatar_v2(user_img)
-            
-            if result_img:
-                st.image(result_img, caption="Your Advanced Independence Day Portrait", use_container_width=True)
-                
-                # Hide the Generate Button since we're done
-                st.markdown('<style>div.stButton { display: none !important; }</style>', unsafe_allow_html=True)
-                
-                # Style the download button to be green
-                st.markdown('<style>div.stDownloadButton > button { background-color: #138808 !important; color: white !important; border: none !important; box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3) !important; } div.stDownloadButton > button:hover { background-color: #0F6B06 !important; }</style>', unsafe_allow_html=True)
-                
-                # Allow user to download as JPG
-                buf = BytesIO()
-                result_img.save(buf, format="JPEG", quality=95)
-                byte_im = buf.getvalue()
-                
-                st.download_button(
-                    label="Download Portrait",
-                    data=byte_im,
-                    file_name="independence_day_portrait.jpg",
-                    mime="image/jpeg"
-                )
+    if not st.session_state.portrait_generated:
+        # STATE 2: GENERATE
+        st.markdown('''
+        <div class="custom-upload-container">
+            <div class="custom-upload-inner" style="padding-bottom: 70px;">
+                <svg class="cloud-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1E3A8A">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div class="upload-text-main">Image Uploaded Successfully!</div>
+                <div class="upload-text-sub" style="margin-bottom: 20px;">Ready to generate your tricolor portrait.</div>
+            </div>
+        </div>
+        ''', unsafe_allow_html=True)
+        
+        # Pull the button up into the box
+        st.markdown('<style>div.stButton { margin-top: -85px; position: relative; z-index: 10; } div.stButton > button { background-color: white !important; color: #FF9933 !important; border: 2px solid #FF9933 !important; } div.stButton > button:hover { background-color: #FFF3E0 !important; }</style>', unsafe_allow_html=True)
+        
+        if st.button("Generate Portrait"):
+            with st.spinner("Generating your portrait... This might take a few seconds."):
+                res = process_independence_day_avatar_v2(user_img)
+                if res:
+                    st.session_state.result_img = res
+                    st.session_state.portrait_generated = True
+                    st.rerun()
+    else:
+        # STATE 3: DOWNLOAD
+        st.markdown('''
+        <div class="custom-upload-container">
+            <div class="custom-upload-inner" style="padding-bottom: 70px;">
+                <svg class="cloud-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#138808">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <div class="upload-text-main">Portrait Generated!</div>
+                <div class="upload-text-sub" style="margin-bottom: 20px;">Your Independence Day portrait is ready.</div>
+            </div>
+        </div>
+        ''', unsafe_allow_html=True)
+        
+        # Pull the download button up into the box
+        st.markdown('<style>div.stDownloadButton { margin-top: -85px; position: relative; z-index: 10; margin-bottom: 40px; } div.stDownloadButton > button { background-color: #138808 !important; color: white !important; border: none !important; box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3) !important; } div.stDownloadButton > button:hover { background-color: #0F6B06 !important; }</style>', unsafe_allow_html=True)
+        
+        buf = BytesIO()
+        st.session_state.result_img.save(buf, format="JPEG", quality=95)
+        byte_im = buf.getvalue()
+        
+        st.download_button(
+            label="Download Portrait",
+            data=byte_im,
+            file_name="independence_day_portrait.jpg",
+            mime="image/jpeg"
+        )
+        
+        st.image(st.session_state.result_img, caption="Your Advanced Independence Day Portrait", use_container_width=True)
