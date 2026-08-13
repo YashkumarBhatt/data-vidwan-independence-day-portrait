@@ -96,7 +96,7 @@ def process_independence_day_avatar_v2(user_img):
 
     glow_size = 12
     glow_alpha = Image.new("L", (target_w + glow_size * 2, target_h + glow_size * 2), 0)
-    glow_mask = cutout_scaled.split()[3].filter(ImageFilter.GaussianBlur(radius=6))
+    glow_mask = cutout_scaled.split()[3].filter(ImageFilter.GaussianBlur(radius=2))
     glow_alpha.paste(glow_mask, (glow_size, glow_size))
     glow_color = Image.new("RGBA", (target_w + glow_size * 2, target_h + glow_size * 2), (255, 255, 255, 35))
     glow_color.putalpha(glow_alpha)
