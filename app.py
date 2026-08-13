@@ -73,7 +73,7 @@ def process_independence_day_avatar_v2(user_img):
 
     main_bg = load_image_from_url(MAIN_BG_URL, (canvas_w, canvas_h))
 
-    bg_blurred = main_bg.filter(ImageFilter.GaussianBlur(radius=4))
+    bg_blurred = main_bg.filter(ImageFilter.GaussianBlur(radius=1))
     final_canvas.paste(bg_blurred, (0, 0))
 
     gradient = Image.new("RGBA", (canvas_w, canvas_h))
@@ -299,7 +299,7 @@ st.markdown(f'''
 <div class="title-container">
     <img src="data:image/png;base64,{logo_base64}" class="logo-img">
     <div class="main-heading">
-        <span class="saffron">Freedom in </span> <span class="green">Every Frame</span>
+        <span class="saffron">Tricolor in </span> <span class="green">Every Frame</span>
     </div>
     <p class="sub-heading">Upload your photo and let AI create your <b style="color: #FF9933;">Independence</b> <b style="color: #138808;">Day</b> portrait.</p>
 </div>
