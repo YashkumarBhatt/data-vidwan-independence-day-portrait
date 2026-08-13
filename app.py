@@ -188,12 +188,12 @@ st.markdown(f"""
        ========================================= */
 
     /* Hide the default Streamlit label */
-    [data-testid="stWidgetLabel"] {
+    [data-testid="stWidgetLabel"] {{
         display: none !important;
-    }
+    }}
 
     /* Style our custom HTML container */
-    .custom-upload-container {
+    .custom-upload-container {{
         background-color: white;
         border-radius: 24px;
         padding: 12px;
@@ -201,10 +201,10 @@ st.markdown(f"""
         max-width: 550px;
         margin: 0 auto;
         position: relative;
-    }
+    }}
 
     /* Style the inner dashed border */
-    .custom-upload-inner {
+    .custom-upload-inner {{
         border: 2px dashed #A7F3D0; /* Light green dashed border */
         border-radius: 16px;
         padding: 40px 20px 30px 20px;
@@ -213,44 +213,44 @@ st.markdown(f"""
         align-items: center;
         text-align: center;
         background-color: #FAFAFA;
-    }
+    }}
 
     /* Cloud Icon */
-    .cloud-icon {
+    .cloud-icon {{
         width: 64px;
         height: 64px;
         margin-bottom: 20px;
         opacity: 0.6;
-    }
+    }}
 
     /* Main Text */
-    .upload-text-main {
+    .upload-text-main {{
         color: #374151;
         font-size: 1.25rem;
         font-weight: 700;
         margin-bottom: 10px;
-    }
+    }}
 
     /* Divider */
-    .upload-divider {
+    .upload-divider {{
         display: flex;
         align-items: center;
         width: 50%;
         margin: 15px 0;
-    }
-    .upload-divider::before, .upload-divider::after {
+    }}
+    .upload-divider::before, .upload-divider::after {{
         content: "";
         flex: 1;
         border-bottom: 1px solid #E5E7EB;
-    }
-    .upload-divider span {
+    }}
+    .upload-divider span {{
         padding: 0 15px;
         color: #9CA3AF;
         font-size: 0.9rem;
-    }
+    }}
 
     /* Fake Button */
-    .upload-btn-fake {
+    .upload-btn-fake {{
         background-color: #138808;
         color: white;
         font-weight: 600;
@@ -259,30 +259,30 @@ st.markdown(f"""
         font-size: 1.05rem;
         margin-bottom: 20px;
         box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3);
-    }
+    }}
 
     /* Sub Text */
-    .upload-text-sub {
+    .upload-text-sub {{
         color: #9CA3AF;
         font-size: 0.85rem;
-    }
+    }}
 
     /* Make the real Streamlit uploader invisible and overlay it on top */
-    [data-testid="stFileUploader"] {
+    [data-testid="stFileUploader"] {{
         opacity: 0 !important;
         position: relative;
         top: -340px; /* Pull it up over the custom UI */
         margin-bottom: -340px; /* Prevent it from taking up extra space */
         height: 340px !important;
         z-index: 999;
-    }
-    [data-testid="stFileUploader"] > section {
+    }}
+    [data-testid="stFileUploader"] > section {{
         height: 100% !important;
         cursor: pointer !important;
-    }
+    }}
 
     /* Center the Generate/Download buttons */
-    div.stButton > button, div.stDownloadButton > button {
+    div.stButton > button, div.stDownloadButton > button {{
         background-color: #138808 !important;
         color: white !important;
         border: none !important;
@@ -293,11 +293,11 @@ st.markdown(f"""
         box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3) !important;
         display: block;
         margin: 0 auto;
-    }
-    div.stButton > button:hover, div.stDownloadButton > button:hover {
+    }}
+    div.stButton > button:hover, div.stDownloadButton > button:hover {{
         background-color: #0F6B06 !important;
         color: white !important;
-    }
+    }}
 </style>
 """, unsafe_allow_html=True)
 
