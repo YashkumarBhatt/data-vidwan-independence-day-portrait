@@ -132,6 +132,8 @@ def process_independence_day_avatar_v2(user_img):
 # Custom CSS for styling + Independence Day background
 st.markdown(f"""
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
     /* Independence Day Background */
     .stApp {{
         background-image: url("data:image/png;base64,{bg_image}");
@@ -152,38 +154,78 @@ st.markdown(f"""
         background: transparent;
     }}
 
-    .main-heading {{
-        color: #1E3A8A; /* Dark Blue */
-        font-size: 2.1rem !important;
-        font-weight: 800;
-        margin-bottom: 0rem;
+    /* Title container centering */
+    .title-container {{
+        text-align: center;
+        margin-top: 1rem;
     }}
+    
+    .logo-img {{
+        height: 60px;
+        margin-bottom: 10px;
+    }}
+
+    .main-heading {{
+        font-family: 'Dancing Script', cursive;
+        font-size: 4.5rem !important;
+        margin-bottom: 0rem;
+        line-height: 1.2;
+    }}
+    
+    .saffron {{ color: #FF9933; }}
+    .green {{ color: #138808; }}
+
     .sub-heading {{
-        color: #3B82F6; /* Lighter Blue */
-        font-size: 1.05rem;
+        color: #4A4A4A;
+        font-size: 1.1rem;
         margin-top: 0.5rem;
         margin-bottom: 2rem;
+        font-weight: 500;
     }}
+
+    /* Style the file uploader */
+    [data-testid="stFileUploadDropzone"] {{
+        background-color: white !important;
+        border-radius: 15px !important;
+        padding: 2rem !important;
+        border: 2px dashed #E0E0E0 !important;
+    }}
+    
+    [data-testid="stFileUploadDropzone"] button {{
+        background-color: #138808 !important; /* Green */
+        color: white !important;
+        border-radius: 20px !important;
+        font-weight: bold !important;
+        padding: 0.5rem 1.5rem !important;
+    }}
+
     /* Style both buttons identically */
     div.stButton > button, div.stDownloadButton > button {{
-        background-color: #1E3A8A !important;
+        background-color: #138808 !important;
         color: white !important;
         border: none !important;
-        border-radius: 6px !important;
+        border-radius: 20px !important;
         font-weight: 600 !important;
-        padding: 0.5rem 1rem !important;
+        padding: 0.5rem 1.5rem !important;
     }}
     div.stButton > button:hover, div.stDownloadButton > button:hover {{
-        background-color: #2563EB !important;
+        background-color: #0F6B06 !important;
         color: white !important;
     }}
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<p class="main-heading"><img src="https://i.ibb.co/FbLdv4bt/Data-Vidwan-Logo.jpg" style="height: 2em; vertical-align: middle; margin-right: 0px; margin-bottom: 5px;"> Independence Day Portrait</p>', unsafe_allow_html=True)
-st.markdown('<p class="sub-heading">Upload your photo below, and our advanced AI engine will do the magic to generate your portrait.</p>', unsafe_allow_html=True)
+st.markdown('''
+<div class="title-container">
+    <img src="https://i.ibb.co/FbLdv4bt/Data-Vidwan-Logo.jpg" class="logo-img">
+    <div class="main-heading">
+        <span class="saffron">Celebrate</span> <span class="green">Freedom</span>
+    </div>
+    <p class="sub-heading">Upload your photo and let AI create your <b style="color: #FF9933;">Independence</b> <b style="color: #138808;">Day</b> portrait.</p>
+</div>
+''', unsafe_allow_html=True)
 
-uploaded_file = st.file_uploader("Upload your photo", type=["png", "jpg", "jpeg"])
+uploaded_file = st.file_uploader("", type=["png", "jpg", "jpeg"])
 
 if uploaded_file is not None:
     # Convert uploaded file using PIL for maximum compatibility
