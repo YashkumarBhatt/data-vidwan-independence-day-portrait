@@ -184,72 +184,105 @@ st.markdown(f"""
     }}
 
     /* =========================================
-       EXTREME FILE UPLOADER CSS HACKING 
+       PERFECT CUSTOM UPLOADER UI
        ========================================= */
 
-    /* Hide the label completely */
-    [data-testid="stWidgetLabel"] {{
+    /* Hide the default Streamlit label */
+    [data-testid="stWidgetLabel"] {
         display: none !important;
-    }}
+    }
 
-    /* Make the entire file uploader area a giant invisible button overlaying our custom UI */
-    [data-testid="stFileUploader"] {{
+    /* Style our custom HTML container */
+    .custom-upload-container {
+        background-color: white;
+        border-radius: 24px;
+        padding: 12px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        max-width: 550px;
+        margin: 0 auto;
         position: relative;
-        background-color: white !important;
-        border-radius: 20px !important;
-        padding: 40px !important;
-        border: 2px solid #E5E7EB !important;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
-        max-width: 500px !important;
-        margin: 0 auto !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        text-align: center !important;
-        overflow: hidden;
-    }}
+    }
 
-    /* Inject the cloud icon using ::before on the uploader */
-    [data-testid="stFileUploader"]::before {{
-        content: "";
-        display: block;
-        width: 60px;
-        height: 60px;
-        margin: 0 auto 20px auto;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12'/%3E%3C/svg%3E");
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        pointer-events: none;
-    }}
-
-    /* Inject the custom text "Drag & drop your photo here" */
-    [data-testid="stFileUploader"]::after {{
-        content: "Drag & drop your photo here \A \A or \A \A Browse Files \A \A PNG, JPG up to 20MB";
-        white-space: pre-wrap;
+    /* Style the inner dashed border */
+    .custom-upload-inner {
+        border: 2px dashed #A7F3D0; /* Light green dashed border */
+        border-radius: 16px;
+        padding: 40px 20px 30px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         text-align: center;
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #374151;
-        line-height: 1.5;
-        position: relative;
-        z-index: 1;
-        pointer-events: none;
-    }}
+        background-color: #FAFAFA;
+    }
 
-    /* Hide the default Streamlit uploader visually but keep it clickable over our custom UI */
-    [data-testid="stFileUploader"] > section {{
-        position: absolute !important;
-        top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    /* Cloud Icon */
+    .cloud-icon {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 20px;
+        opacity: 0.6;
+    }
+
+    /* Main Text */
+    .upload-text-main {
+        color: #374151;
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    /* Divider */
+    .upload-divider {
+        display: flex;
+        align-items: center;
+        width: 50%;
+        margin: 15px 0;
+    }
+    .upload-divider::before, .upload-divider::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid #E5E7EB;
+    }
+    .upload-divider span {
+        padding: 0 15px;
+        color: #9CA3AF;
+        font-size: 0.9rem;
+    }
+
+    /* Fake Button */
+    .upload-btn-fake {
+        background-color: #138808;
+        color: white;
+        font-weight: 600;
+        padding: 12px 36px;
+        border-radius: 30px;
+        font-size: 1.05rem;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3);
+    }
+
+    /* Sub Text */
+    .upload-text-sub {
+        color: #9CA3AF;
+        font-size: 0.85rem;
+    }
+
+    /* Make the real Streamlit uploader invisible and overlay it on top */
+    [data-testid="stFileUploader"] {
         opacity: 0 !important;
-        z-index: 10 !important;
-        width: 100% !important;
+        position: relative;
+        top: -340px; /* Pull it up over the custom UI */
+        margin-bottom: -340px; /* Prevent it from taking up extra space */
+        height: 340px !important;
+        z-index: 999;
+    }
+    [data-testid="stFileUploader"] > section {
         height: 100% !important;
         cursor: pointer !important;
-    }}
+    }
 
     /* Center the Generate/Download buttons */
-    div.stButton > button, div.stDownloadButton > button {{
+    div.stButton > button, div.stDownloadButton > button {
         background-color: #138808 !important;
         color: white !important;
         border: none !important;
@@ -260,11 +293,11 @@ st.markdown(f"""
         box-shadow: 0 4px 6px -1px rgba(19, 136, 8, 0.3) !important;
         display: block;
         margin: 0 auto;
-    }}
-    div.stButton > button:hover, div.stDownloadButton > button:hover {{
+    }
+    div.stButton > button:hover, div.stDownloadButton > button:hover {
         background-color: #0F6B06 !important;
         color: white !important;
-    }}
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -275,6 +308,20 @@ st.markdown('''
         <span class="saffron">Celebrate</span> <span class="green">Freedom</span>
     </div>
     <p class="sub-heading">Upload your photo and let AI create your <b style="color: #FF9933;">Independence</b> <b style="color: #138808;">Day</b> portrait.</p>
+</div>
+''', unsafe_allow_html=True)
+
+st.markdown('''
+<div class="custom-upload-container">
+    <div class="custom-upload-inner">
+        <svg class="cloud-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#6B7280">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+        </svg>
+        <div class="upload-text-main">Drag & drop your photo here</div>
+        <div class="upload-divider"><span>or</span></div>
+        <div class="upload-btn-fake">Browse Files</div>
+        <div class="upload-text-sub">PNG, JPG up to 20MB</div>
+    </div>
 </div>
 ''', unsafe_allow_html=True)
 
