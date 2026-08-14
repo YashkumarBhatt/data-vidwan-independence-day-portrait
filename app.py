@@ -121,7 +121,7 @@ def process_independence_day_avatar_v2(user_img):
         target_logo_h = int(target_logo_w * logo_aspect)
         resized_logo = transparent_logo.resize((target_logo_w, target_logo_h), Image.Resampling.LANCZOS)
 
-        padding_x = 40
+        padding_x = 0
         padding_y = 20
         logo_x = canvas_w - target_logo_w - padding_x
         logo_y = canvas_h - target_logo_h - padding_y
