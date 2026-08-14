@@ -346,7 +346,9 @@ else:
     st.markdown('<style>[data-testid="stFileUploader"] { display: none !important; }</style>', unsafe_allow_html=True)
     
     uploaded_file = uploaded_files[0]
-    user_pil = Image.open(uploaded_file).convert("RGB")
+    user_pil = Image.open(uploaded_file)
+    user_pil = ImageOps.exif_transpose(user_pil)  # Fix smartphone photo rotation
+    user_pil = user_pil.convert("RGB")
     user_img = np.array(user_pil)
     
     if not st.session_state.portrait_generated:
