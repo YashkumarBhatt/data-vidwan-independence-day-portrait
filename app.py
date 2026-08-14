@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 import cv2
-from PIL import Image, ImageFilter, ImageOps, ImageDraw, ImageFont
+from PIL import Image, ImageFilter, ImageOps, ImageDraw, ImageFont, ImageEnhance
 from rembg import remove, new_session
 import requests
 from io import BytesIO
