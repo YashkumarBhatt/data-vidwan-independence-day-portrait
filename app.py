@@ -74,7 +74,11 @@ def process_independence_day_avatar_v2(user_img):
     main_bg = load_image_from_url(MAIN_BG_URL, (canvas_w, canvas_h))
 
     bg_blurred = main_bg.filter(ImageFilter.GaussianBlur(radius=2.7))
-    final_canvas.paste(bg_blurred, (0, 0))
+    
+    # Darken the background
+    darker_bg = ImageEnhance.Brightness(bg_blurred).enhance(0.6)
+    
+    final_canvas.paste(darker_bg, (0, 0))
 
     gradient = Image.new("RGBA", (canvas_w, canvas_h))
     draw_g = ImageDraw.Draw(gradient)
