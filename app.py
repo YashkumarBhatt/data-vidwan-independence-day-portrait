@@ -76,7 +76,7 @@ def process_independence_day_avatar_v2(user_img):
     bg_blurred = main_bg.filter(ImageFilter.GaussianBlur(radius=2.7))
     
     # Darken the background
-    darker_bg = ImageEnhance.Brightness(bg_blurred).enhance(0.8)
+    darker_bg = ImageEnhance.Brightness(bg_blurred).enhance(1.0)
     
     final_canvas.paste(darker_bg, (0, 0))
 
